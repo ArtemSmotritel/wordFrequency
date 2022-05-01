@@ -20,22 +20,26 @@ const findTheMostUsed = table => {
 }
 
 const wordFreq = text => {
-    let mostUsed, biggestFreq = 0;
-    let words = text.split(/[ \r?\n\.,]+/);
+    let mostUsedWord = null, biggestFrequency = 0;
+    let words = text.split(/[ \t\r?\n\.,;:]+/);
     let table = words.reduce((m, word) => m.set(word, (m.get(word) + 1 || 1)), new Map());
-    table.forEach((count, word, arr) => {
-        if (count > biggestFreq) {
-            mostUsed = word;
-            biggestFreq = count;
+    
+    table.forEach((frequency, word) => {
+        if (frequency > biggestFrequency) {
+            mostUsedWord = word;
+            biggestFrequency = frequency;
         }
     });
-    return mostUsed;
+    
+    return mostUsedWord;
 }
 
 
-let text = 'abobus space, coma. dot... semilicon\n asdas abobus space, abobus,';
+let text = 'abobus space, coma. dot... semilicon\n asdas: abobus; space\t abobus,';
 
-
-console.log(findTheMostUsed(wordFrequency(text)));
-console.log('\n');
+//console.log(findTheMostUsed(wordFrequency(text)));
+//console.log('\n');
 console.log(wordFreq(text));
+console.log(wordFreq(''));
+console.log(wordFreq('simple'));
+console.log(wordFreq('bla bla foo foo'));
